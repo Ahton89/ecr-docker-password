@@ -5,20 +5,24 @@ A small github action for obtaining the password from the AWS ECR for using it a
 ## Example usage
 ```yaml
     - name: Get ECR password
-      uses: ahton89/ecr-docker-password@v0.0.1
+      uses: ahton89/ecr-docker-password@v0.0.6
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 ```
 
 ## Inputs
 ```yaml
-  aws-access-key-id:
+  access-key-id:
     description: 'AWS Access Key ID'
     required: true
-  aws-secret-access-key:
+  secret-access-key:
     description: 'AWS Secret Access Key'
     required: true
+  region:
+    description: 'AWS region'
+    required: false
+    default: 'us-east-2'
 ```
 
 ## Outputs
