@@ -1,0 +1,7 @@
+name: ecr-docker-password
+author: Ahton89
+description: Small action to get the docker password for ECR
+
+runs:
+  using: docker
+  image: Dockerfile
