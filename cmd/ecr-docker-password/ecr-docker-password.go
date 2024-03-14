@@ -14,17 +14,17 @@ func main() {
 
 	action := githubactions.New()
 
-	ecrAwsAccessKeyId := action.GetInput("ecr_aws_access_key_id")
+	ecrAwsAccessKeyId := action.GetInput("access_key_id")
 	if ecrAwsAccessKeyId == "" {
-		action.Fatalf("ecr_aws_access_key_id is required")
+		action.Fatalf("access_key_id is required")
 	}
 
-	ecrAwsSecretAccessKey := action.GetInput("ecr_aws_secret_access_key")
+	ecrAwsSecretAccessKey := action.GetInput("secret_access_key")
 	if ecrAwsSecretAccessKey == "" {
-		action.Fatalf("ecr_aws_secret_access_key is required")
+		action.Fatalf("secret_access_key is required")
 	}
 
-	ecrAwsRegion := action.GetInput("ecr_aws_region")
+	ecrAwsRegion := action.GetInput("region")
 
 	ecrClient := ecr.New(ecrAwsAccessKeyId, ecrAwsSecretAccessKey, ecrAwsRegion)
 	_, err := ecrClient.GetPassword(ctx)
