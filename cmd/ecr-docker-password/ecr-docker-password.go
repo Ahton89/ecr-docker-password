@@ -27,12 +27,10 @@ func main() {
 	ecrAwsRegion := action.GetInput("region")
 
 	ecrClient := ecr.New(ecrAwsAccessKeyId, ecrAwsSecretAccessKey, ecrAwsRegion)
-	_, err := ecrClient.GetPassword(ctx)
+	password, err := ecrClient.GetPassword(ctx)
 	if err != nil {
 		action.Fatalf("error getting ECR password: %s", err)
 	}
-
-	password := "megakekurepassword1234"
 
 	action.SetOutput("ecr-docker-password", password)
 	action.SaveState("ecr-docker-password", password)
