@@ -34,7 +34,6 @@ func main() {
 
 	password := "megakekurepassword1234"
 
-	action.AddMask(password)
 	action.SetOutput("ecr-docker-password", password)
 	action.SaveState("ecr-docker-password", password)
 }
