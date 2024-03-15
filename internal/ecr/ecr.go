@@ -2,11 +2,13 @@ package ecr
 
 import (
 	"context"
+	"encoding/base64"
 	"fmt"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/credentials"
 	serviceEcr "github.com/aws/aws-sdk-go-v2/service/ecr"
+	"strings"
 )
 
 type ecr struct {
@@ -63,5 +65,25 @@ func (e *ecr) GetPassword(ctx context.Context) (string, error) {
 		return "", fmt.Errorf("no authorization data found or something went wrong")
 	}
 
-	return aws.ToString(ecrToken.AuthorizationData[0].AuthorizationToken), nil
+	password, err := e.decodeToken(aws.ToString(ecrToken.AuthorizationData[0].AuthorizationToken))
+	if err != nil {
+		return "", err
+	}
+
+	return password, nil
+}
+
+func (e *ecr) decodeToken(authorizationToken string) (string, error) {
+	decodedToken, err := base64.StdEncoding.DecodeString(authorizationToken)
+	if err != nil {
+		return "", err
+	}
+
+	dividedToken := strings.Split(string(decodedToken), ":")
+	if len(dividedToken) != 2 {
+		err = fmt.Errorf("invalid token")
+		return "", err
+	}
+
+	return dividedToken[1], err
 }
